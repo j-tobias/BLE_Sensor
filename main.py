@@ -105,8 +105,14 @@ def rssi (sensor_id: int, mac_adress: str, period: int, mean: bool = True):
 if __name__ == "__main__":
     import uvicorn
     import socket
+    import json
 
-    uvicorn.run(app, host=str(socket.gethostbyname(socket.gethostname())), port=5000)
+    with open ("CONFIG.json", mode = 'r') as f:
+        config = json.load(f)
+    
+
+
+    uvicorn.run(app, host=config["IP Adress"], port=config["Port"])
 
 
     
