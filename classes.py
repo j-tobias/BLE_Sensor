@@ -95,7 +95,7 @@ class Scanner:
         scan_list = []
 
         end = TIME.time() + period
-        while time.time() < end:
+        while TIME.time() < end:
             scan = search()
             if type(scan) == None:
                 scan = {'type': 'None', 'uuid': 'None', 'major': 0, 'minor': 0, 'rssi': 0, 'macAddress': 'None', 'Time': 'None'}
