@@ -1,11 +1,10 @@
 #This File will contain the class which will be used by the RaspberryPi
 from datetime import time
 import time as TIME
+from scanner import scan as search
 
+"""
 def search () -> dict:
-    """
-    Advertising Interval of an IOS device is 30ms
-    """
     scan = {
         'type': 'iBeacon', 
         'uuid': '366a03db-7f03-40b2-b90a-b70e429f05d6', 
@@ -16,6 +15,8 @@ def search () -> dict:
         'Time': 'datetime.time(20, 24, 47, 992459)'
         }
     return scan
+
+"""
 
 class Scanner:
 
