@@ -36,7 +36,7 @@ class Scanner:
         #Iterate through the Scans
         for scan in scans:
             #Select the MAC Adress from the scan and append it to the list
-            mac_adresses.append(scan.get('macAddress'))
+            mac_adresses.append(scan[0].get('macAddress'))
         #Filter out doubles
         mac_adresses = list(set(mac_adresses))
         #Update global MAC Adress List
@@ -55,7 +55,7 @@ class Scanner:
         #iterate through scans
         for scan in scans:
             #select scans with the given MAC Adress
-            if scan.get('macAddress') == mac_adress:
+            if scan[0].get('macAddress') == mac_adress:
                 #Select the RSSI from the scan and append it to the list
                 rssi_list.append(scan.get('rssi'))
 
@@ -97,8 +97,8 @@ class Scanner:
         end = TIME.time() + period
         while TIME.time() < end:
             scan = search()
-            if type(scan) == None:
-                scan = {'type': 'None', 'uuid': 'None', 'major': 0, 'minor': 0, 'rssi': 0, 'macAddress': 'None', 'Time': 'None'}
+            if type(scan) == None or scan == []:
+                scan = [{'type': 'None', 'uuid': 'None', 'major': 0, 'minor': 0, 'rssi': 0, 'macAddress': 'None', 'Time': 'None'}]
 
             scan_list.append(scan)
 
