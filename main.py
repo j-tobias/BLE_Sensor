@@ -11,6 +11,9 @@ Sensor_dict = {
     "0001": Scanner()
     }
 
+global Scanner_
+Scanner_ = Scanner()
+
 @app.get("/")
 def read_root():
     return {"Hello": "World"}
@@ -26,7 +29,7 @@ def status(sensor_id: int):
     #---------------------
     #Get the STATUS of the SENSOR
     #---------------------
-    Scanner_ = Sensor_dict.get(str(sensor_id))
+    #Scanner_ = Sensor_dict.get(str(sensor_id))
     status = {
         "40:C7:11:7A:86:60" :{
             "rssi": 70,
@@ -42,7 +45,7 @@ def mac_adress_list (sensor_id: int):
     #---------------------
     #Get the MAC ADRESS LIST of the SENSOR
     #---------------------
-    Scanner_ = Sensor_dict.get(str(sensor_id))
+    #Scanner_ = Sensor_dict.get(str(sensor_id))
     mac_adresses = Scanner_.get_mac_adresses()
     return {'MAC Adresses': mac_adresses}
 
@@ -53,7 +56,7 @@ def mac_adress_list (sensor_id: int, min: int = None, max: int = None):
     #Get the MAC ADRESS LIST of the SENSOR
     #Iterate through List and delete unwanted values
     #---------------------
-    Scanner_ = Sensor_dict.get(str(sensor_id))
+    #Scanner_ = Sensor_dict.get(str(sensor_id))
     scan = Scanner_._scan()
     mac_adresses = []
     for value in scan:
@@ -82,7 +85,7 @@ def scan (sensor_id: int, period: int):
     #Get a scan of the Sensor over a given period
     #later Scanner.scan is used
     #---------------------
-    Scanner_ = Sensor_dict.get(str(sensor_id))
+    #Scanner_ = Sensor_dict.get(str(sensor_id))
     scan_ = Scanner_._scan(period)
     return scan_
 
@@ -92,7 +95,7 @@ def rssi (sensor_id: int, mac_adress: str, period: int, mean: bool = True):
     #Get a scan of the Sensor over a given period
     #later Scanner.scan is used
     #---------------------
-    Scanner_ = Sensor_dict.get(str(sensor_id))
+    #Scanner_ = Sensor_dict.get(str(sensor_id))
     rssi_ = Scanner_.get_rssi(mac_adress, period, mean)
     return {"rssi": rssi_}
 
@@ -113,6 +116,7 @@ if __name__ == "__main__":
 
 
     uvicorn.run(app, host=config["IP Adress"], port=config["Port"])
+
 
 
     

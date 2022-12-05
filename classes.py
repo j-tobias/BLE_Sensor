@@ -102,8 +102,6 @@ class Scanner:
 
             scan_list.append(scan)
 
-        
-
         return scan_list
 
 
