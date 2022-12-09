@@ -2,5 +2,6 @@
     "IP Adress": "10.0.0.2",
     "Port": 5000,
     "Frequency": 1,
-    "len_value_list": 30
+    "len_value_list": 30,
+    "ID": 789
 }

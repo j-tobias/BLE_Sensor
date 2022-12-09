@@ -20,6 +20,8 @@ IP_Adress = config["IP Adress"]
 Port = config["Port"]
 #defines the Length of the List the Mean is calculated from
 len_value_list = config["len_value_list"]
+#load the ID of the Sensor
+Id = config["ID"]
 
 #is the base url which will always be called to send Data to the Server
 base_url = f"http://{IP_Adress}:{Port}/"
@@ -46,7 +48,7 @@ while True:
     #execute every given seconds 
     if float(timedelta.total_seconds(abs(current_time - previous_time))) >= frequency:
 
-        requests.post(base_url+"recieve_scan", body)
+        requests.post(base_url+ f"{Id}/recieve_scan", body)
         previous_time = current_time
 
     
