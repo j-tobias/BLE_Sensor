@@ -1,8 +1,8 @@
 import requests
 from datetime import datetime, timedelta
 import json
-#from scanner import scan
-from test import scan
+from scanner import scan
+#from test import scan
 from time import sleep
 
 #################
@@ -46,11 +46,9 @@ while True:
     #execute every given seconds 
     if float(timedelta.total_seconds(abs(current_time - previous_time))) >= frequency:
 
-        #requests.post(base_url+"recieve_scan", body)
+        requests.post(base_url+"recieve_scan", body)
         previous_time = current_time
-        print('MA:04:CV:C6', len(body.get('MA:04:CV:C6')),body.get('MA:04:CV:C6'))
-        print('IA:04:CV:C6', len(body.get('IA:04:CV:C6')),body.get('IA:04:CV:C6'))
-        print('GU:04:FG:C6', len(body.get('GU:04:FG:C6')),body.get('GU:04:FG:C6'))
+
     
     ## SCAN BLE
     ## SORT BY MAC ADRESS
