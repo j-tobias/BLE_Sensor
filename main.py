@@ -1,123 +1,115 @@
-from typing import Union
-from classes import Scanner
+import requests
+from datetime import datetime, timedelta
+import json
+#from scanner import scan
+from test import scan
+from time import sleep
 
-from fastapi import FastAPI
+#################
+##CONFIGURATION##
+#################
 
-app = FastAPI()
+with open("CONFIG.json", mode = "r") as f:
+    config = json.load(f)
 
-# initiate Sensor Objects and save them
-global Sensor_dict
-Sensor_dict = {
-    "0001": Scanner()
-    }
+#defines the Frequency in which the Rssi Value is uploaded to the Server
+frequency = config["Frequency"]
+#defines the IP Adress of the Server
+IP_Adress = config["IP Adress"]
+#defines the Port of the Server
+Port = config["Port"]
+#defines the Length of the List the Mean is calculated from
+len_value_list = config["len_value_list"]
 
-global Scanner_
-Scanner_ = Scanner()
+#is the base url which will always be called to send Data to the Server
+base_url = f"http://{IP_Adress}:{Port}/"
 
-@app.get("/")
-def read_root():
-    return {"Hello": "World"}
+previous_time = datetime.now()
 
+#dict with current mac adresses and their current statuses
+body = {
+    "MAC Adress 1": "current RSSI",
+    "MAC Adress 2": "current RSSI",
+    "MAC Adress 3": "current RSSI",
+    "     ...    ": "current RSSI",
+}
 
-@app.get("/items/{item_id}")
-def read_item(item_id: int, q: Union[str, None] = None):
-    print('Hello World')
-    return {"item_id": item_id, "q": q}
+####################
+##ACTUAL ALGORITHM##
+####################
 
-@app.get("/{sensor_id}/status")
-def status(sensor_id: int):
-    #---------------------
-    #Get the STATUS of the SENSOR
-    #---------------------
-    #Scanner_ = Sensor_dict.get(str(sensor_id))
-    status = {
-        "40:C7:11:7A:86:60" :{
-            "rssi": 70,
-            "uuid": 1234567898765432,
-            "timestamp": 123456789
-        }
-    }
-    return {"sensor_id": sensor_id, "Status": status}
-
-#get List of Mac-Adresses
-@app.get("/{sensor_id}/mac-adress-list")
-def mac_adress_list (sensor_id: int):
-    #---------------------
-    #Get the MAC ADRESS LIST of the SENSOR
-    #---------------------
-    #Scanner_ = Sensor_dict.get(str(sensor_id))
-    mac_adresses = Scanner_.get_mac_adresses()
-    return {'MAC Adresses': mac_adresses}
-
-#get List of Mac-Adresses with a rssi value below x or above x
-@app.get("/{sensor_id}/mac-adress-list/min-{min}-max-{max}")
-def mac_adress_list (sensor_id: int, min: int = None, max: int = None):
-    #---------------------
-    #Get the MAC ADRESS LIST of the SENSOR
-    #Iterate through List and delete unwanted values
-    #---------------------
-    #Scanner_ = Sensor_dict.get(str(sensor_id))
-    scan = Scanner_._scan()
-    mac_adresses = []
-    for value in scan:
-        if min == None and max != None:
-            if value.get("rssi") < max:
-                mac_adresses.append(value.get("macAddress"))
-
-        
-        elif min != None and max == None:
-            if value.get("rssi") > min:
-                mac_adresses.append(value.get("macAddress"))
-
-        elif min == None and max == None:
-            mac_adresses = "ERROR NOT MIN AND NO MAX GIVEN"
-
-        else:
-            if value.get("rssi") > min and value.get("rssi") < max:
-                mac_adresses.append(value.get("macAddress"))
-
-    return {'MAC Adresses': mac_adresses}
-
-#collect data for p seconds and return values
-@app.get("/{sensor_id}/scan/{period}")
-def scan (sensor_id: int, period: int):
-    #---------------------
-    #Get a scan of the Sensor over a given period
-    #later Scanner.scan is used
-    #---------------------
-    #Scanner_ = Sensor_dict.get(str(sensor_id))
-    scan_ = Scanner_._scan(period)
-    return scan_
-
-@app.get("/{sensor_id}/rssi/mac_adress-{mac_adress}-period-{period}-mean-{mean}")
-def rssi (sensor_id: int, mac_adress: str, period: int, mean: bool = True):
-    #---------------------
-    #Get a scan of the Sensor over a given period
-    #later Scanner.scan is used
-    #---------------------
-    #Scanner_ = Sensor_dict.get(str(sensor_id))
-    rssi_ = Scanner_.get_rssi(mac_adress, period, mean)
-    return {"rssi": rssi_}
-
-
-# WWWAYYY Later !!!
-# Plan is to plug in multiple sensors into 1 RaspberryPi
-# But then all different sensors have to be available over the API by the 1 RaspberryPi
-# Therefore every Sensor gets an ID and then will be called by the API over this ID
-
-if __name__ == "__main__":
-    import uvicorn
-    import socket
-    import json
-
-    with open ("CONFIG.json", mode = 'r') as f:
-        config = json.load(f)
+#continously scan for BLE
+while True:
     
-
-
-    uvicorn.run(app, host=config["IP Adress"], port=config["Port"])
-
-
-
+    current_time = datetime.now()
     
+    #execute every given seconds 
+    if float(timedelta.total_seconds(abs(current_time - previous_time))) >= frequency:
+
+        #requests.post(base_url+"recieve_scan", body)
+        previous_time = current_time
+        print('MA:04:CV:C6', len(body.get('MA:04:CV:C6')),body.get('MA:04:CV:C6'))
+        print('IA:04:CV:C6', len(body.get('IA:04:CV:C6')),body.get('IA:04:CV:C6'))
+        print('GU:04:FG:C6', len(body.get('GU:04:FG:C6')),body.get('GU:04:FG:C6'))
+    
+    ## SCAN BLE
+    ## SORT BY MAC ADRESS
+    ## add new values to value list
+
+    scan_ = scan()
+
+    if [] not in scan_:
+        #[
+        #[{'type': 'None', 'uuid': 'None', 'major': 0, 'minor': 0, 'rssi': 0, 'macAddress': 'None', 'Time': 'None'}]
+        #[{'type': 'None', 'uuid': 'None', 'major': 0, 'minor': 0, 'rssi': 0, 'macAddress': 'None', 'Time': 'None'}]
+        #[{'type': 'None', 'uuid': 'None', 'major': 0, 'minor': 0, 'rssi': 0, 'macAddress': 'None', 'Time': 'None'}]
+        #]
+        body_temp = {}
+
+        for sample in scan_:
+            #[{'type': 'None', 'uuid': 'None', 'major': 0, 'minor': 0, 'rssi': 0, 'macAddress': 'None', 'Time': 'None'}]
+            sample = dict(sample[0])
+            #{'type': 'None', 'uuid': 'None', 'major': 0, 'minor': 0, 'rssi': 0, 'macAddress': 'None', 'Time': 'None'}
+            mac_address = sample.get("macAddress")
+
+            #get lists or Nones of current MAC Adress
+            list_1 = body_temp.get(mac_address)
+            list_2 = body.get(mac_address)
+            #get current rssi
+            rssi = sample.get("rssi")
+
+            if body_temp.get(mac_address) != None:
+                
+                list_ = list_1.append(rssi)
+                body_temp.update({mac_address:list_[1:]})
+
+            #in case the Mac Adress is newly detected by the Sensor
+            #and the Mac Adress is in no Body
+            elif list_2 == None and list_1 == None:
+
+                #intialize an empty list of required length
+                list_ = list([0] * len_value_list)
+
+                #add the rssi value
+                list_.append(sample.get("rssi"))
+
+                #update bodies with cropped list
+                body_temp.update({mac_address:list_[1:]})
+
+            #in case the Mac Adress is already given in the Body but not in the temp Body
+            elif body.get(mac_address) != None and body_temp.get(mac_address) == None:
+
+                #get list from body
+                list_ = body.get(mac_address)
+
+                #add rssi value
+                list_.append(sample.get("rssi"))
+
+                #update to new body with required length
+                body_temp.update({mac_address:list_[1:]})
+
+        body = body_temp
+        sleep(0.5)
+
+
 
