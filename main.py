@@ -1,9 +1,12 @@
 import requests
 from datetime import datetime, timedelta
 import json
-from scanner import scan
-#from test import scan
+#from BLE_Sensor.scanner import scan
+#from utils import get_distance
+from test import scan, get_distance
 from time import sleep
+from statistics import mean
+
 
 #################
 ##CONFIGURATION##
@@ -22,6 +25,8 @@ Port = config["Port"]
 len_value_list = config["len_value_list"]
 #load the ID of the Sensor
 Id = config["ID"]
+#load the config of the Measured Powers as dict
+Measured_Powers = dict(config["Measured Powers"])
 
 #is the base url which will always be called to send Data to the Server
 base_url = f"http://{IP_Adress}:{Port}/"
@@ -48,7 +53,29 @@ while True:
     #execute every given seconds 
     if float(timedelta.total_seconds(abs(current_time - previous_time))) >= frequency:
 
-        requests.post(base_url+ f"{Id}/recieve_scan", body)
+        for key in body.keys():
+            #get the rssi list
+            rssi_list = body.get(key)
+            #define the measured Power Variable
+            measured_power = Measured_Powers.get(key) if Measured_Powers.get(key) != None else -50
+            #initiate distances list
+            distances = []
+            #compute distances for different N
+            for n in range(4):
+                N = n+4
+                distances.append(get_distance(mean(rssi_list), measured_power, N))
+            
+            #replace rssi values with distances
+            body[key] = distances
+
+        try:
+            #requests.post(base_url+ f"{Id}/recieve_scan", body)
+            pass
+        except:
+            pass
+        
+        for key in body.keys():
+            print(key, body[key])
         previous_time = current_time
 
     
@@ -105,11 +132,14 @@ while True:
                 #add rssi value
                 list_.append(sample.get("rssi"))
 
-                #update to new body with required length
+                #update to new body with required length‚‚
                 body_temp.update({mac_address:list_[1:]})
 
         body = body_temp
-        sleep(0.5)
+        sleep(0.25)
+    else:
+        sleep(60)
+        
 
 
 

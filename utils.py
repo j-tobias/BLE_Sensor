@@ -1,7 +1,7 @@
 #This is a working prototype. DO NOT USE IT IN LIVE PROJECTS
 import sys
 import struct
-import bluetooth._bluetooth as bluez
+#import bluetooth._bluetooth as bluez
 from datetime import datetime
 
 
@@ -121,3 +121,17 @@ def parse_events(sock, loop_count=100):
             return resultsArray
 
     return results
+
+def get_distance (rssi: int,measured_power: int,n: int):
+    """
+    Returns the Distance [m] for a given MAC Adress
+    Distance = 10 ^ ((Measured Power -RSSI)/(10 * N))
+
+    1. Distance
+    2. Measured Power
+    3. RSSI
+    4. N (Constant depends on the Environmental factor. Range 2–4, low to-high strength as explained above)
+    """        
+    distance = 10 ** ((measured_power - rssi)/(10 * n))
+
+    return distance

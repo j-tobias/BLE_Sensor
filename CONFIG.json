@@ -3,5 +3,8 @@
     "Port": 5000,
     "Frequency": 1,
     "len_value_list": 30,
-    "ID": 789
+    "ID": 789,
+    "Measured Powers":{
+        "MAC Adress": "value"
+    }
 }
