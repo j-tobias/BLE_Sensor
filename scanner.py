@@ -1,6 +1,6 @@
 import sys
 import struct
-#import bluetooth._bluetooth as bluez
+import bluetooth._bluetooth as bluez
 import utils as ScanUtility
 import time
 
