@@ -1,9 +1,9 @@
 import requests
 from datetime import datetime, timedelta
 import json
-#from BLE_Sensor.scanner import scan
-#from utils import get_distance
-from test import scan, get_distance
+from scanner import scan
+from utils import get_distance
+#from test import scan, get_distance
 from time import sleep
 from statistics import mean
 
