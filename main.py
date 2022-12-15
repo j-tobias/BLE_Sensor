@@ -6,6 +6,7 @@ from utils import get_distance
 #from test import scan, get_distance
 from time import sleep
 from statistics import mean
+import json
 
 
 #################
@@ -68,12 +69,13 @@ while True:
             #replace rssi values with distances
             body[key] = distances
 
-        try:
-            print(str(body))
-            requests.post(base_url+ f"{Id}/recieve_scan", body)
-            pass
-        except:
-            pass
+        if body != {}:
+            try:
+                body = json.dumps(body)
+                print(str(body))
+                requests.post(base_url+ f"{Id}/recieve_scan", body)
+            except:
+                pass
         
         previous_time = current_time
 
