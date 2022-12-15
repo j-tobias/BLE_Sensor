@@ -86,6 +86,7 @@ while True:
     scan_ = scan()
 
     if [] not in scan_:
+        # A Scan is a list of lists and every list contains one dictionary containing the scanned values
         #[
         #[{'type': 'None', 'uuid': 'None', 'major': 0, 'minor': 0, 'rssi': 0, 'macAddress': 'None', 'Time': 'None'}]
         #[{'type': 'None', 'uuid': 'None', 'major': 0, 'minor': 0, 'rssi': 0, 'macAddress': 'None', 'Time': 'None'}]
