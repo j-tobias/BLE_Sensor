@@ -1,7 +1,7 @@
 #This is a working prototype. DO NOT USE IT IN LIVE PROJECTS
 import sys
 import struct
-#import bluetooth._bluetooth as bluez
+import bluetooth._bluetooth as bluez
 from datetime import datetime
 
 
