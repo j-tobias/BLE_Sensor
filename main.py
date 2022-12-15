@@ -96,6 +96,7 @@ while True:
 
         for sample in scan_:
             #[{'type': 'None', 'uuid': 'None', 'major': 0, 'minor': 0, 'rssi': 0, 'macAddress': 'None', 'Time': 'None'}]
+            print(sample)
             sample = dict(sample[0])
             #{'type': 'None', 'uuid': 'None', 'major': 0, 'minor': 0, 'rssi': 0, 'macAddress': 'None', 'Time': 'None'}
             mac_address = sample.get("macAddress")
