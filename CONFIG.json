@@ -1,7 +1,7 @@
 {
-    "IP Adress": "10.0.0.2",
+    "IP Adress": "10.220.9.86",
     "Port": 5000,
-    "Frequency": 1,
+    "Frequency": 5,
     "len_value_list": 30,
     "ID": 789,
     "Measured Powers":{
