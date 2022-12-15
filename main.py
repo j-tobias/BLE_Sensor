@@ -69,7 +69,7 @@ while True:
             body[key] = distances
 
         try:
-            #requests.post(base_url+ f"{Id}/recieve_scan", body)
+            requests.post(base_url+ f"{Id}/recieve_scan", body)
             pass
         except:
             pass
