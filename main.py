@@ -107,7 +107,7 @@ while True:
             if body_temp.get(mac_address) != None:
                 
                 list_ = list_1.append(rssi)
-                body_temp.update({mac_address:list_[1:]})
+                body_temp.update({f"{mac_address}":list_[1:]})
 
             #in case the Mac Adress is newly detected by the Sensor
             #and the Mac Adress is in no Body
@@ -120,7 +120,7 @@ while True:
                 list_.append(sample.get("rssi"))
 
                 #update bodies with cropped list
-                body_temp.update({mac_address:list_[1:]})
+                body_temp.update({f"{mac_address}":list_[1:]})
 
             #in case the Mac Adress is already given in the Body but not in the temp Body
             elif body.get(mac_address) != None and body_temp.get(mac_address) == None:
@@ -132,7 +132,7 @@ while True:
                 list_.append(sample.get("rssi"))
 
                 #update to new body with required length‚‚
-                body_temp.update({mac_address:list_[1:]})
+                body_temp.update({f"{mac_address}":list_[1:]})
 
         body = body_temp
         sleep(0.25)
