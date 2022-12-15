@@ -69,13 +69,12 @@ while True:
             body[key] = distances
 
         try:
+            print(str(body))
             requests.post(base_url+ f"{Id}/recieve_scan", body)
             pass
         except:
             pass
         
-        for key in body.keys():
-            print(key, body[key])
         previous_time = current_time
 
     
