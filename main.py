@@ -70,7 +70,7 @@ while True:
                 distances.append(get_distance(mean(rssi_list), measured_power, N))
             
             #replace rssi values with distances
-            payload.update({f"{key}": rssi_list})
+            payload.update({f"{key}": distances})
 
         if body != {}:
             try:
@@ -80,7 +80,7 @@ while True:
                 print("Post transformation -----------")
                 print(str(body_json))
 
-                requests.post(base_url+ f"{Id}/recieve_scan", payload)
+                requests.post(base_url+ f"{Id}/recieve_scan",json = payload)
             except:
                 pass
         
