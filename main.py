@@ -81,6 +81,9 @@ while True:
                 print(str(body_json))
 
                 requests.post(base_url+ f"{Id}/recieve_scan",json = payload)
+                requests.post(base_url+ f"{Id}/recieve_scan",data = payload)
+                requests.post(base_url+ f"{Id}/recieve_scan",json = body_json)
+                requests.post(base_url+ f"{Id}/recieve_scan",data = body_json)
             except:
                 pass
         
