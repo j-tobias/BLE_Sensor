@@ -54,7 +54,9 @@ while True:
     #execute every given seconds 
     if float(timedelta.total_seconds(abs(current_time - previous_time))) >= frequency:
 
-        payload = {}
+        payload = {
+            "Sensor_ID": Id
+        }
 
         for key in body.keys():
 
@@ -80,10 +82,10 @@ while True:
                 print("Post transformation -----------")
                 print(str(body_json))
 
-                requests.post(base_url+ f"{Id}/recieve_scan",json = payload)
-                requests.post(base_url+ f"{Id}/recieve_scan",data = payload)
-                requests.post(base_url+ f"{Id}/recieve_scan",json = body_json)
-                requests.post(base_url+ f"{Id}/recieve_scan",data = body_json)
+                requests.post(base_url+ f"/recieve_scan/",json = payload)
+                requests.post(base_url+ f"/recieve_scan/",data = payload)
+                requests.post(base_url+ f"/recieve_scan/",json = body_json)
+                requests.post(base_url+ f"/recieve_scan/",data = body_json)
             except:
                 pass
         
