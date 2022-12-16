@@ -54,7 +54,10 @@ while True:
     #execute every given seconds 
     if float(timedelta.total_seconds(abs(current_time - previous_time))) >= frequency:
 
+        payload = {}
+
         for key in body.keys():
+
             #get the rssi list
             rssi_list = body.get(key)
             #define the measured Power Variable
@@ -67,17 +70,17 @@ while True:
                 distances.append(get_distance(mean(rssi_list), measured_power, N))
             
             #replace rssi values with distances
-            body[key] = distances
+            payload.update({f"{key}": rssi_list})
 
         if body != {}:
             try:
                 print("Pre transformation --------")
-                print(str(body))
-                body_json = json.dumps(body)
+                print(str(payload))
+                body_json = json.dumps(payload)
                 print("Post transformation -----------")
                 print(str(body_json))
 
-                requests.post(base_url+ f"{Id}/recieve_scan", body)
+                requests.post(base_url+ f"{Id}/recieve_scan", payload)
             except:
                 pass
         
