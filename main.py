@@ -82,10 +82,10 @@ while True:
                 print("Post transformation -----------")
                 print(str(body_json))
 
-                requests.post(base_url+ f"/recieve_scan/",json = payload)
-                requests.post(base_url+ f"/recieve_scan/",data = payload)
-                requests.post(base_url+ f"/recieve_scan/",json = body_json)
-                requests.post(base_url+ f"/recieve_scan/",data = body_json)
+                requests.post(base_url+ f"recieve_scan/",json = payload)
+                requests.post(base_url+ f"recieve_scan/",data = payload)
+                requests.post(base_url+ f"recieve_scan/",json = body_json)
+                requests.post(base_url+ f"recieve_scan/",data = body_json)
             except:
                 pass
         
