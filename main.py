@@ -71,8 +71,12 @@ while True:
 
         if body != {}:
             try:
-                body = json.dumps(body)
+                print("Pre transformation --------")
                 print(str(body))
+                body_json = json.dumps(body)
+                print("Post transformation -----------")
+                print(str(body_json))
+
                 requests.post(base_url+ f"{Id}/recieve_scan", body)
             except:
                 pass
