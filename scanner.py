@@ -59,7 +59,8 @@ while True:
         # --------------------------------------------------------------------------
         print("{: <20} {:<30}".format("Step 1.2", "create an new Scanner Object"))
         # create an new Scanner Object
-        Scanner_ = Scanner(len_value_list, max_timedelta)
+        Scanner_.N_samples = len_value_list
+        Scanner_.timedelta = max_timedelta
         print("{: <20} {:<30}".format("Step 1.3", "update the update_timer"))
         # update the update_timer
         update_timer = datetime.now()
