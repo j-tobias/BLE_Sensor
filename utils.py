@@ -181,7 +181,7 @@ class Scanner:
         # maximum unused time before mac_address get deleted
         self.timedelta = max_timedelta
 
-    def parse_events (self, loop_count: int = 100):
+    def _parse_events (self, loop_count: int = 100):
         """
         Scans the Bluetooth Socket
 
@@ -199,7 +199,7 @@ class Scanner:
         counter = 0
         while counter <= n_times:
             # get a scan
-            scan_ = self.parse_events(loop_count)
+            scan_ = self._parse_events(loop_count)
             # if the scan is not empty
             if scan_ != None:
                 # get the ID or "MAC ADDRESS" of the scanned iBeacon
