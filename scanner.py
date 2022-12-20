@@ -36,7 +36,7 @@ while True:
 
     print("{: <20} {:<30}".format("Step 1", "check if the config needs to be updated"))
     #check if the config needs to be updated
-    if float(timedelta(abs(datetime.now() - update_timer))) >= Frequency_Update_Config:
+    if float(timedelta.total_seconds(abs(datetime.now() - update_timer))) >= Frequency_Update_Config:
         print("{: <20} {:<30}".format("Step 1.1", "Load Config"))
         # --------------------------------------------------------------------------
         # UPDATE ALL VARIABLES FROM THE CONFIG
@@ -66,7 +66,7 @@ while True:
     
     print("{: <20} {:<30}".format("Step 2", "check if the current scan has to be sent"))
     #check if the current scan has to be sent
-    if float(timedelta(abs(datetime.now() - send_timer))) >= Frequency_Send:
+    if float(timedelta.total_seconds(abs(datetime.now() - send_timer))) >= Frequency_Send:
         print("{: <20} {:<30}".format("Step 2.1", "Load the current Data"))
         #Load the current Data
         with open(filename_current_data, mode = "r") as f:
