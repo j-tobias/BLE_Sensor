@@ -197,7 +197,7 @@ class Scanner:
             # get a scan
             scan_ = self._parse_events(loop_count)
             # if the scan is not empty
-            if scan_ != None:
+            if scan_ != None or scan_ != []:
                 # get the ID or "MAC ADDRESS" of the scanned iBeacon
                 mac_address = scan_.get("macAddress")
                 # get the appropriate Collector for the found MAC ADDRESS

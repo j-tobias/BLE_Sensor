@@ -34,10 +34,9 @@ print("START ENDLESS PROCESS")
 # START THE ENDLESS LOOP
 while True:
 
-    print("{: <20} {:<30}".format("Step 1", "check if the config needs to be updated"))
+
     #check if the config needs to be updated
     if float(timedelta.total_seconds(abs(datetime.now() - update_timer))) >= Frequency_Update_Config:
-        print("{: <20} {:<30}".format("Step 1.1", "Load Config"))
         # --------------------------------------------------------------------------
         # UPDATE ALL VARIABLES FROM THE CONFIG
         with open("CONFIG.json", mode = "r") as f:
@@ -57,40 +56,40 @@ while True:
         id                          = config.get("ID")
         Measured_Powers             = config.get("Measured Powers")
         # --------------------------------------------------------------------------
-        print("{: <20} {:<30}".format("Step 1.2", "create an new Scanner Object"))
+
         # create an new Scanner Object
         Scanner_.N_samples = len_value_list
         Scanner_.timedelta = max_timedelta
-        print("{: <20} {:<30}".format("Step 1.3", "update the update_timer"))
+
         # update the update_timer
         update_timer = datetime.now()
     
-    print("{: <20} {:<30}".format("Step 2", "check if the current scan has to be sent"))
+
     #check if the current scan has to be sent
     if float(timedelta.total_seconds(abs(datetime.now() - send_timer))) >= Frequency_Send:
-        print("{: <20} {:<30}".format("Step 2.1", "Load the current Data"))
+
         #Load the current Data
         with open(filename_current_data, mode = "r") as f:
             data = json.load(f)
-        print("{: <20} {:<30}".format("Step 2.2", "define payload"))
+
         # define payload
         payload = {id : data}
 
         print(payload)
         # send the Data
         try:
-            print("{: <20} {:<30}".format("Step 2.3", "send the Data"))
+
             requests.post(f"http://{IP_Adress}:{Port}/{api_command}", json= payload)
         except:
             pass
-        print("{: <20} {:<30}".format("Step 2.4", "update the send_timer"))
+
         # update the send_timer
         send_timer = datetime.now()
 
-    print("{: <20} {:<30}".format("Step 3", "start a scan"))
+
     # scan
     Scanner_.scan(sleep = sleep_between_scans, loop_count = loop_count, n_times = 10)
-    print("{: <20} {:<30}".format("Step 4", "write scanned data to a file"))
+
     Scanner_.get_data(filename_current_data)
 
 
