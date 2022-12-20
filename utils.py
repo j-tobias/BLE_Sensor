@@ -192,12 +192,12 @@ class Scanner:
         """
         Scans n_times
         """
-        counter = 0
-        while counter <= n_times:
+
+        for _ in range(n_times):
             # get a scan
             scan_ = self._parse_events(loop_count)
             # if the scan is not empty
-            if scan_ != None or scan_ != []:
+            if scan_ != None or type(scan_) != list:
                 # get the ID or "MAC ADDRESS" of the scanned iBeacon
                 mac_address = scan_.get("macAddress")
                 # get the appropriate Collector for the found MAC ADDRESS
@@ -219,10 +219,34 @@ class Scanner:
                     # initiate a usage indicator for this new mac adress
                     self.usage.update({mac_address: datetime.now()})
 
+            elif type(scan_) == list:
+                print(scan_)
+                for scan_i in scan_:
+
+                    # get the ID or "MAC ADDRESS" of the scanned iBeacon
+                    mac_address = scan_i.get("macAddress")
+                    # get the appropriate Collector for the found MAC ADDRESS
+                    Collector_ = self.Collectors.get(mac_address)
+                    # check if a Collector was found
+                    if Collector_ != None:
+                        # add scan to the Collector
+                        Collector_.add_scan(scan_i.get("rssi"))
+                        # update usage indicator
+                        self.usage[mac_address] = datetime.now()
+
+                    else:
+                        # create new Collector
+                        Collector_ = Collector(mac_address, self.N_samples)
+                        # add scan to the Collector
+                        Collector_.add_scan(scan_i.get("rssi"))
+                        # update the Collectors dict
+                        self.Collectors.update({mac_address: Collector_})
+                        # initiate a usage indicator for this new mac adress
+                        self.usage.update({mac_address: datetime.now()})
+
             #sleep for a given time
             time.sleep(sleep)
 
-            counter += 1
     
     def get_data (self, filename: str = "data.json"):
         """
@@ -230,6 +254,8 @@ class Scanner:
         """
         # create an empty Data Holder
         data = {}
+        # create a List with all MAC ADDRESSES which have not been scaned in a certain time
+        pop_mac_addr = []
         # go through all the Collector Objects
         for mac_adress in self.Collectors.keys():
             #check usage
@@ -240,7 +266,12 @@ class Scanner:
                 data.update({mac_adress: np.mean(self.Collectors.get(mac_adress).scans)})
             # otherwise delete the Collector
             else:
-                self.Collectors.pop(mac_adress)
+                #append mac addr to the List
+                pop_mac_addr.append(mac_adress)
+
+        # now pop those MAC ADDRESSES -> don't do it during iteratiom    
+        for mac_adress in pop_mac_addr:
+            self.Collectors.pop(mac_adress)
 
         with open(filename, mode= "w") as f:
             json.dump(data, f)
