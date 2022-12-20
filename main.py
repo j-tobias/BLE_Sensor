@@ -34,7 +34,7 @@ if __name__ == "__main__":
     import subprocess
 
 
-    ip = "10.220.9.86"
+    ip = "10.220.9.76"
     port_n = 5000
     
     uvicorn.run(app, host=ip, port=port_n)
