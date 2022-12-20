@@ -89,9 +89,9 @@ while True:
 
     print("{: <20} {:<30}".format("Step 3", "start a scan"))
     # scan
-    Scanner.scan(sleep = sleep_between_scans, loop_count = loop_count, n_times = 10)
+    Scanner_.scan(sleep = sleep_between_scans, loop_count = loop_count, n_times = 10)
     print("{: <20} {:<30}".format("Step 4", "write scanned data to a file"))
-    Scanner.get_data(filename_current_data)
+    Scanner_.get_data(filename_current_data)
 
 
 
