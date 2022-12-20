@@ -72,16 +72,18 @@ while True:
         with open(filename_current_data, mode = "r") as f:
             data = json.load(f)
 
-        # define payload
-        payload = {id : data}
+        # only send something if Data is available
+        if data != {}:
+            # define payload
+            payload = {id : data}
 
-        print(payload)
-        # send the Data
-        try:
+            print(payload)
+            # send the Data
+            try:
 
-            requests.post(f"http://{IP_Adress}:{Port}/{api_command}", json= payload)
-        except:
-            pass
+                requests.post(f"http://{IP_Adress}:{Port}/{api_command}", json= payload)
+            except:
+                pass
 
         # update the send_timer
         send_timer = datetime.now()
