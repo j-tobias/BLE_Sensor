@@ -70,6 +70,7 @@ while True:
         # define payload
         payload = {id : data}
 
+        print(payload)
         # send the Data
         try:
             requests.post(f"http://{IP_Adress}:{Port}/{api_command}", json= payload)
@@ -79,6 +80,7 @@ while True:
         # update the send_timer
         send_timer = datetime.now()
 
+    print("Started scanning")
     # continouisly scan
     Scanner.scan(sleep_between_scans, loop_count, 10)
     Scanner.get_data(filename_current_data)
