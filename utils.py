@@ -21,7 +21,7 @@ def hci_disable_le_scan(sock):
 
 def hci_toggle_le_scan(sock, enable):
     cmd_pkt = struct.pack("<BB", enable, 0x00)
-    bluez.hci_send_cmd(sock, OGF_LE_CTL, OCF_LE_SET_SCAN_ENABLE, cmd_pkt)
+    #bluez.hci_send_cmd(sock, OGF_LE_CTL, OCF_LE_SET_SCAN_ENABLE, cmd_pkt)
 
 def packetToString(packet):
     """
@@ -33,6 +33,7 @@ def packetToString(packet):
         return ''.join('%02x' % struct.unpack("B", x)[0] for x in packet)
 
 def parse_events(sock, loop_count=100):
+
     # old_filter = sock.getsockopt( bluez.SOL_HCI, bluez.HCI_FILTER, 14)
     flt = bluez.hci_filter_new()
     bluez.hci_filter_all_events(flt)
@@ -125,21 +126,6 @@ def parse_events(sock, loop_count=100):
 
     return results
 
-#definitions
-enable = 0x01
-num_scans = 1000
-
-#bluetooth socket
-sock = bluez.hci_open_dev(0)
-
-#hci_enable_le_scan
-cmd_pkt = struct.pack("<BB", enable, 0x00)
-bluez.hci_send_cmd(sock, OGF_LE_CTL, OCF_LE_SET_SCAN_ENABLE, cmd_pkt)
-
-
-def scan ():
-    return parse_events(sock, 20)
-
 
 
 
@@ -167,7 +153,17 @@ class Scanner:
         """
 
         # define the Bluetooth Socket
-        self.sock = bluez.hci_open_dev(0)
+        # --------------------------------------------------------------------------
+        #definitions
+        enable = 0x01
+
+        #bluetooth socket
+        sock = bluez.hci_open_dev(0)
+
+        #hci_enable_le_scan
+        cmd_pkt = struct.pack("<BB", enable, 0x00)
+        bluez.hci_send_cmd(sock, OGF_LE_CTL, OCF_LE_SET_SCAN_ENABLE, cmd_pkt)
+        # --------------------------------------------------------------------------
 
         # make N_samples globaly
         self.N_samples = N_samples
