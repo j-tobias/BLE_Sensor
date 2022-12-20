@@ -158,11 +158,11 @@ class Scanner:
         enable = 0x01
 
         #bluetooth socket
-        sock = bluez.hci_open_dev(0)
+        self.sock = bluez.hci_open_dev(0)
 
         #hci_enable_le_scan
         cmd_pkt = struct.pack("<BB", enable, 0x00)
-        bluez.hci_send_cmd(sock, OGF_LE_CTL, OCF_LE_SET_SCAN_ENABLE, cmd_pkt)
+        bluez.hci_send_cmd(self.sock, OGF_LE_CTL, OCF_LE_SET_SCAN_ENABLE, cmd_pkt)
         # --------------------------------------------------------------------------
 
         # make N_samples globaly
