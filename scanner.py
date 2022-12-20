@@ -30,7 +30,7 @@ print("Scanner set up")
 # initiate the Timers
 update_timer = datetime.now()
 send_timer   = datetime.now()
-print("START ENDLESS PROCESS")
+print("Start Scanning ...")
 # START THE ENDLESS LOOP
 while True:
 

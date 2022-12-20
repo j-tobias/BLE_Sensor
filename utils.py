@@ -196,6 +196,9 @@ class Scanner:
         for _ in range(n_times):
             # get a scan
             scan_ = self._parse_events(loop_count)
+
+            #for debugging
+            print(scan_)
             # if the scan is not empty
             if scan_ != None or type(scan_) != list:
                 # get the ID or "MAC ADDRESS" of the scanned iBeacon
@@ -220,7 +223,6 @@ class Scanner:
                     self.usage.update({mac_address: datetime.now()})
 
             elif type(scan_) == list:
-                print(scan_)
                 for scan_i in scan_:
 
                     # get the ID or "MAC ADDRESS" of the scanned iBeacon
