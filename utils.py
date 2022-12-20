@@ -200,7 +200,7 @@ class Scanner:
             #for debugging
             print(scan_)
             # if the scan is not empty
-            if scan_ != None or type(scan_) != list:
+            if scan_ != []:
                 # get the ID or "MAC ADDRESS" of the scanned iBeacon
                 mac_address = scan_.get("macAddress")
                 # get the appropriate Collector for the found MAC ADDRESS
@@ -222,7 +222,7 @@ class Scanner:
                     # initiate a usage indicator for this new mac adress
                     self.usage.update({mac_address: datetime.now()})
 
-            elif type(scan_) == list:
+            elif type(scan_) == list and scan_ != []:
                 for scan_i in scan_:
 
                     # get the ID or "MAC ADDRESS" of the scanned iBeacon
