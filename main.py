@@ -17,7 +17,7 @@ async def update_config(data: dict):
 
 
 @app.get("/get_config/")
-def get_config ():
+async def get_config ():
     """
     return the current config file
     """
