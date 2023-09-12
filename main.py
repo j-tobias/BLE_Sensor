@@ -35,7 +35,7 @@ if __name__ == "__main__":
 
     subprocess.Popen(["python", "scanner.py"])
 
-    ip = "10.220.9.76"
+    ip = "0.0.0.0"
     port_n = 5000
     
     uvicorn.run(app, host=ip, port=port_n)
