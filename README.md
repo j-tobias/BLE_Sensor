@@ -8,11 +8,6 @@ In a given Frequenz it uploads these Results to a given Server via an POST API c
 
 Each Sensor Provides an API to allow for different settings of parameters
 
-## Maintenance APP
-I added an app to easily change the settings of the Sensors
-
-![alt text]([http://url/to/img.png](https://e.pcloud.link/publink/show?code=XZaiSnZg3cxPpnLhYf3jopdDk6qDSeGts27)https://e.pcloud.link/publink/show?code=XZaiSnZg3cxPpnLhYf3jopdDk6qDSeGts27)
-
 ## Mainetenance APP
 I added an app to easily change the settings of the Sensors
 
