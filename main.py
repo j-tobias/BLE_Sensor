@@ -12,7 +12,7 @@ app = FastAPI()
 @app.post("/update_config/")
 async def update_config(data: dict):
     
-    with open("CONFIG.json", mode = "W") as f:
+    with open("CONFIG.json", mode = "w+") as f:
         json.dump(data, f)
 
 
