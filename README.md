@@ -12,3 +12,8 @@ Each Sensor Provides an API to allow for different settings of parameters
 I added an app to easily change the settings of the Sensors
 
 ![alt text]([http://url/to/img.png](https://e.pcloud.link/publink/show?code=XZaiSnZg3cxPpnLhYf3jopdDk6qDSeGts27)https://e.pcloud.link/publink/show?code=XZaiSnZg3cxPpnLhYf3jopdDk6qDSeGts27)
+
+## Mainetenance APP
+I added an app to easily change the settings of the Sensors
+
+![Screenshot_maintenanceAPP](Screenshot_maintenanceAPP.png)
